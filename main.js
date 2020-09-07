@@ -2,28 +2,43 @@ let addTaskBtn = document.querySelector('.add-task');
 let tasksContainer = document.querySelector('.tasks-container');
 let finishedTasksContainer = document.querySelector('.finsihed-tasks-container');
 let taskTextBox = document.querySelector('input#write-task-input');
+let finishAll = document.querySelector('.all-operations span:first-of-type');
+let deleteAll = document.querySelector('.all-operations span:last-of-type');
 
 checkIfNoTasks();
 checkTasksCount();
 
+window.onload = () => taskTextBox.focus();
+
 addTaskBtn.onclick = document.querySelector('.write-task form').onsubmit = function (e) {
     e.preventDefault();
     if (taskTextBox.value === '') {
-        alert('please add some text to the new task');
+        sweetAlert('please add some text to the new task');
     } else {
         if (Array.from(document.querySelectorAll('.task')).map(x => x.firstElementChild.textContent).includes(taskTextBox.value)) {
-            alert('task already written');
+            sweetAlert('task already written');
         } else {
             addTask();
         }
     }
 }
 
+finishAll.onclick = function () {
+    document.querySelectorAll('.task').forEach(task => {
+        task.querySelector('span:nth-of-type(2)').click();
+    });
+}
+deleteAll.onclick = function () {
+    document.querySelectorAll('.task').forEach(task => {
+        task.querySelector('span:last-of-type').click();
+    });
+}
+
 document.body.addEventListener('click', function (e) {
     if (Array.from(document.querySelectorAll('.task span:last-of-type')).includes(e.target)) {
-        deteteTask(e);
+        deleteTask(e.target);
     } else if (Array.from(document.querySelectorAll('.task span:nth-of-type(2)')).includes(e.target)) {
-        finishTask(e);
+        finishTask(e.target);
     }
 })
 
@@ -45,23 +60,32 @@ function addTask() {
     if (document.querySelector('.no-task')) document.querySelector('.no-task').remove();
 }
 
-function deteteTask(e) {
-    e.target.parentNode.remove();
+function deleteTask(target) {
+    target.parentNode.remove();
     checkIfNoTasks();
     checkTasksCount();
 }
 
-function finishTask(e) {
+function finishTask(target) {
     if (document.querySelector('.no-finished-tasks')) document.querySelector('.no-finished-tasks').remove();
-    let taskText = e.target.parentNode.firstElementChild.textContent;
+    let taskText = target.parentNode.firstElementChild.textContent;
     let finishedTask = document.createElement('div');
     finishedTasksContainer.appendChild(finishedTask);
     finishedTask.outerHTML = `<div class="finished-task">${taskText}</div>`;
-    e.target.parentNode.remove();
+    target.parentNode.remove();
     checkTasksCount();
 }
 
 function checkTasksCount() {
     document.querySelector('.tasks-info .current-tasks-count span').textContent = document.querySelectorAll('.task').length;
     document.querySelector('.tasks-info .finished-tasks-count span').textContent = document.querySelectorAll('.finished-task').length;
+}
+
+function sweetAlert(msg) {
+    Swal.fire({
+        icon: 'error',
+        text: `${msg}`,
+        showConfirmButton: true,
+        timer: 2500
+    })
 }

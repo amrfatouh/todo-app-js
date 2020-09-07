@@ -69,7 +69,7 @@ h1 {
     padding-top: 4px;
 }
 
-.tasks-container .task span:nth-of-type(2) {
+.tasks-container .task span:nth-of-type(2), .all-operations span:first-of-type {
     flex: 1;
     background-color: #397;
     color: #fff;
@@ -80,7 +80,7 @@ h1 {
     margin-right: 5px;
 }
 
-.tasks-container .task span:last-of-type {
+.tasks-container .task span:last-of-type, .all-operations span:last-of-type {
     flex: 1;
     background-color: #b44;
     color: #fff;
@@ -88,6 +88,11 @@ h1 {
     border-radius: 7px;
     cursor: pointer;
     user-select: none;
+}
+
+.all-operations {
+    margin-top: 20px;
+    letter-spacing: 1px;
 }
 
 .tasks-info {
