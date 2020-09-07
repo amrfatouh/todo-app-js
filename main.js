@@ -39,6 +39,9 @@ document.body.addEventListener('click', function (e) {
         deleteTask(e.target);
     } else if (Array.from(document.querySelectorAll('.task span:nth-of-type(2)')).includes(e.target)) {
         finishTask(e.target);
+    } else if (Array.from(document.querySelectorAll('.finsihed-tasks-container .finished-task span.remove-finished')).includes(e.target)) {
+        e.target.parentNode.remove();
+        checkIfNoFinishedTasks();
     }
 })
 
@@ -47,6 +50,14 @@ function checkIfNoTasks() {
         let noTasksDiv = document.createElement('div');
         tasksContainer.appendChild(noTasksDiv);
         noTasksDiv.outerHTML = `<div class="no-task">There is currently no tasks</div>`;
+    }
+}
+
+function checkIfNoFinishedTasks() {
+    if (document.querySelectorAll('.finished-task').length === 0) {
+        let noFinishedTasksDiv = document.createElement('div');
+        finishedTasksContainer.appendChild(noFinishedTasksDiv);
+        noFinishedTasksDiv.outerHTML = `<div class="no-finished-tasks">There is currently no finished tasks</div>`;
     }
 }
 
@@ -71,9 +82,15 @@ function finishTask(target) {
     let taskText = target.parentNode.firstElementChild.textContent;
     let finishedTask = document.createElement('div');
     finishedTasksContainer.appendChild(finishedTask);
-    finishedTask.outerHTML = `<div class="finished-task">${taskText}</div>`;
+    finishedTask.outerHTML = `<div class="finished-task"><span>${taskText}</span><span class='remove-finished' style='display: none;'>x</span>`;
+    //making the finishedTask variable point to the added html element instead of pointing to the empty div (outer html line doesn't change the variable - it changes the html element in the document only)
+    finishedTask = finishedTasksContainer.children[finishedTasksContainer.children.length - 1];
+    //add event listener for hover
+    finishedTask.addEventListener('mouseenter', () => finishedTask.querySelector('span.remove-finished').style.display = 'inline');
+    finishedTask.addEventListener('mouseleave', () => finishedTask.querySelector('span.remove-finished').style.display = 'none');
     target.parentNode.remove();
     checkTasksCount();
+    checkIfNoTasks();
 }
 
 function checkTasksCount() {

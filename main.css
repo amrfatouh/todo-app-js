@@ -117,11 +117,24 @@ h1 {
     background-color: #339;
 }
 
-.finsihed-tasks-container .finished-task {
+.finsihed-tasks-container .finished-task span:not(:last-of-type) {
     color: #5a5;
     text-decoration: line-through;
 }
 
 .finsihed-tasks-container .no-finished-tasks {
     color: #888;
+}
+
+.finsihed-tasks-container .finished-task {
+    position: relative;
+}
+
+.finsihed-tasks-container .finished-task span.remove-finished {
+    color: #999;
+    position: absolute;
+    right: 0;
+    margin-right: 10px;
+    cursor: pointer;
+    user-select: none;
 }
