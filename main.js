@@ -5,10 +5,35 @@ let taskTextBox = document.querySelector('input#write-task-input');
 let finishAll = document.querySelector('.all-operations span:first-of-type');
 let deleteAll = document.querySelector('.all-operations span:last-of-type');
 
+//get current tasks from local storage
+if (localStorage.current_tasks) {
+    JSON.parse(localStorage.current_tasks).forEach(item => {
+        let a = document.createElement('div');
+        tasksContainer.appendChild(a);
+        a.outerHTML = item;
+    });
+}
+//get finished tasks from local storage
+if (localStorage.finished_tasks) {
+    JSON.parse(localStorage.finished_tasks).forEach(item => {
+        let finishedTask = document.createElement('div');
+        finishedTasksContainer.appendChild(finishedTask);
+        finishedTask.outerHTML = item;
+        //setting the created element to the html from 'item' put in the html document
+        finishedTask = finishedTasksContainer.children[finishedTasksContainer.children.length - 1];
+        //add event listener for hover
+        finishedTask.addEventListener('mouseenter', () => finishedTask.querySelector('span.remove-finished').style.display = 'inline');
+        finishedTask.addEventListener('mouseleave', () => finishedTask.querySelector('span.remove-finished').style.display = 'none');
+    });
+}
+
 checkIfNoTasks();
+checkIfNoFinishedTasks();
 checkTasksCount();
 
 window.onload = () => taskTextBox.focus();
+
+//adding clicking event listeners to elements in the document (.finished-task elements have mouseenter and mouseleave listeners that aren't put here )
 
 addTaskBtn.onclick = document.querySelector('.write-task form').onsubmit = function (e) {
     e.preventDefault();
@@ -40,10 +65,10 @@ document.body.addEventListener('click', function (e) {
     } else if (Array.from(document.querySelectorAll('.task span:nth-of-type(2)')).includes(e.target)) {
         finishTask(e.target);
     } else if (Array.from(document.querySelectorAll('.finsihed-tasks-container .finished-task span.remove-finished')).includes(e.target)) {
-        e.target.parentNode.remove();
-        checkIfNoFinishedTasks();
+        removeFinishedTask(e.target);
     }
 })
+
 
 function checkIfNoTasks() {
     if (document.querySelectorAll('.task').length === 0) {
@@ -65,6 +90,8 @@ function addTask() {
     let newDiv = document.createElement('div');
     tasksContainer.appendChild(newDiv);
     newDiv.outerHTML = `<div class="task"><span>${taskTextBox.value}</span><span>finished</span><span>delete</span></div>`;
+    //local storage
+    window.localStorage.setItem('current_tasks', JSON.stringify(Array.from(document.querySelectorAll('.task')).map(task => task.outerHTML)));
     taskTextBox.value = '';
     checkTasksCount();
     //remove no tasks div if found
@@ -73,24 +100,36 @@ function addTask() {
 
 function deleteTask(target) {
     target.parentNode.remove();
+    window.localStorage.setItem('current_tasks', JSON.stringify(Array.from(document.querySelectorAll('.task')).map(task => task.outerHTML)));
     checkIfNoTasks();
     checkTasksCount();
 }
 
 function finishTask(target) {
+    //remove no finished tasks div if found
     if (document.querySelector('.no-finished-tasks')) document.querySelector('.no-finished-tasks').remove();
     let taskText = target.parentNode.firstElementChild.textContent;
     let finishedTask = document.createElement('div');
     finishedTasksContainer.appendChild(finishedTask);
     finishedTask.outerHTML = `<div class="finished-task"><span>${taskText}</span><span class='remove-finished' style='display: none;'>x</span>`;
+    //local storage
+    localStorage.setItem('finished_tasks', JSON.stringify(Array.from(document.querySelectorAll('.finished-task')).map(task => task.outerHTML)));
     //making the finishedTask variable point to the added html element instead of pointing to the empty div (outer html line doesn't change the variable - it changes the html element in the document only)
     finishedTask = finishedTasksContainer.children[finishedTasksContainer.children.length - 1];
     //add event listener for hover
     finishedTask.addEventListener('mouseenter', () => finishedTask.querySelector('span.remove-finished').style.display = 'inline');
     finishedTask.addEventListener('mouseleave', () => finishedTask.querySelector('span.remove-finished').style.display = 'none');
     target.parentNode.remove();
+    window.localStorage.setItem('current_tasks', JSON.stringify(Array.from(document.querySelectorAll('.task')).map(task => task.outerHTML)));
     checkTasksCount();
     checkIfNoTasks();
+}
+
+function removeFinishedTask(target) {
+    target.parentNode.remove();
+    localStorage.setItem('finished_tasks', JSON.stringify(Array.from(document.querySelectorAll('.finished-task')).map(task => task.outerHTML)));
+    checkIfNoFinishedTasks();
+    checkTasksCount();
 }
 
 function checkTasksCount() {
