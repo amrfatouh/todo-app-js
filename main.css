@@ -5,7 +5,21 @@ body {
 }
 
 h1 {
-    margin: 60px 0 50px;
+    margin: 60px auto 50px;
+    background-color: rgb(212, 202, 61);
+    width: 15%;
+    display: block;
+    padding: 10px;
+    border-radius: 15px;
+    color: #fff;
+}
+
+.todo-container {
+    background-color: rgb(209, 180, 172);
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+    border-radius: 20px;
 }
 
 .write-task {
@@ -41,6 +55,13 @@ h1 {
 .write-task input {
     padding: 5px 15px;
     width: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: none;
+    border-radius: 7px;
+}
+
+.write-task input:focus {
+    outline: none;
 }
 
 .tasks-container, .finsihed-tasks-container {
@@ -51,9 +72,10 @@ h1 {
 
 .tasks-container>div, .finsihed-tasks-container>div {
     padding: 5px 20px;
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.3);
     border: 1px solid #ccc;
     margin-bottom: 10px;
+    border-radius: 7px;
 }
 
 .tasks-container .task {
@@ -98,6 +120,7 @@ h1 {
 
 .tasks-info {
     margin: 30px;
+    margin-bottom: 50px;
 }
 
 .tasks-info>div {
@@ -119,7 +142,7 @@ h1 {
 }
 
 .finsihed-tasks-container .finished-task span:not(:last-of-type) {
-    color: #5a5;
+    color: #494;
     text-decoration: line-through;
 }
 
