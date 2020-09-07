@@ -1,0 +1,34 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+
+    <h1>Todo App</h1>
+    <div class="todo-container">
+        <h2>Tasks</h2>
+        <div class="write-task">
+            <form><input type="text" id='write-task-input' autocomplete="off"></form>
+            <span class='add-task'>+</span>
+        </div>
+        <div class="tasks-container">
+        </div>
+        <div class="tasks-info">
+            <div class="current-tasks-count">current tasks:&nbsp;<span>0</span></div>
+            <div class="finished-tasks-count">finished tasks:&nbsp;<span>0</span></div>
+        </div>
+        <h2>Finished Tasks</h2>
+        <div class="finsihed-tasks-container">
+            <div class="no-finished-tasks">There is currently no finished Tasks</div>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+
+</html>

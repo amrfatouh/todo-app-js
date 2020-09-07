@@ -1,0 +1,122 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+h1 {
+    margin: 60px 0 50px;
+}
+
+.write-task {
+    width: 50%;
+    margin: auto;
+    margin-bottom: 30px;
+}
+
+.write-task span.add-task {
+    height: 35px;
+    width: 35px;
+    background-color: #b49;
+    color: #fff;
+    display: inline-block;
+    line-height: 35px;
+    font-size: 30px;
+    border-radius: 50%;
+    box-shadow: 2px 2px 3px #7147;
+    position: relative;
+    top: 5px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.write-task form {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    margin-right: 20px;
+    width: calc(100% - 40px - 20px);
+}
+
+.write-task input {
+    padding: 5px 15px;
+    width: 100%;
+}
+
+.tasks-container, .finsihed-tasks-container {
+    position: relative;
+    width: 50%;
+    margin: auto;
+}
+
+.tasks-container>div, .finsihed-tasks-container>div {
+    padding: 5px 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+.tasks-container .task {
+    display: flex;
+}
+
+.tasks-container .no-task {
+    color: #888;
+    text-decoration: none;
+}
+
+.tasks-container .task span:first-of-type {
+    flex: 8;
+    padding-top: 4px;
+}
+
+.tasks-container .task span:nth-of-type(2) {
+    flex: 1;
+    background-color: #397;
+    color: #fff;
+    padding: 4px 7px;
+    border-radius: 7px;
+    cursor: pointer;
+    user-select: none;
+    margin-right: 5px;
+}
+
+.tasks-container .task span:last-of-type {
+    flex: 1;
+    background-color: #b44;
+    color: #fff;
+    padding: 4px 7px;
+    border-radius: 7px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.tasks-info {
+    margin: 30px;
+}
+
+.tasks-info>div {
+    margin-bottom: 10px;
+}
+
+.tasks-info span {
+    color: #fff;
+    padding: 2px 5px;
+    border-radius: 5px;
+}
+
+.tasks-info .current-tasks-count span {
+    background-color: #393;
+}
+
+.tasks-info .finished-tasks-count span {
+    background-color: #339;
+}
+
+.finsihed-tasks-container .finished-task {
+    color: #5a5;
+    text-decoration: line-through;
+}
+
+.finsihed-tasks-container .no-finished-tasks {
+    color: #888;
+}
